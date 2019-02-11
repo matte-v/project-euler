@@ -1,5 +1,6 @@
 import math
 
+
 def all_dividers(n):
     return [x for x in range(1, n+1) if n % x == 0]
 
@@ -37,3 +38,13 @@ def factorization(n):
     for x in range(2, math.ceil(math.sqrt(n)) + 1):
         if n % x == 0:
             return [x] + factorization(int(n / x))
+
+
+def is_pytagorean(a, b, c):
+    sides = [a, b, c]
+    if min(sides) < 0:
+        return False
+    hypot = max(sides)
+    sides.remove(hypot)
+    return sides[0]**2 + sides[1]**2 == hypot**2
+
