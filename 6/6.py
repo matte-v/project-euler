@@ -14,7 +14,7 @@ from itertools import combinations
 
 
 def main():
-    # (A + B + C)^2 = A^2 + B^2 + C^2 + 2AB + 2AC + 2BC => (A^2 + B^2 + C^2) - (A^2 + B^2 + C^2) = - (+ 2AB + 2AC + 2BC)
+    # (A + B + C)^2 = A^2 + B^2 + C^2 + 2AB + 2AC + 2BC => (A + B + C)^2 - (A^2 + B^2 + C^2) = - (+ 2AB + 2AC + 2BC)
     comb = combinations(list(range(1, 101)), 2)
     list_to_sum = [2 * c[0] * c[1] for c in comb]
     solution = sum(list_to_sum)
