@@ -20,7 +20,7 @@ What is the value of the first triangle number to have over five hundred divisor
 """
 import timeit
 
-from commons.numbers_ops import all_dividers
+from commons.numbers_ops import all_divisors
 
 
 def get_triangle_of(n):
@@ -33,7 +33,7 @@ def main():
     max_ndiv = 0
     while n_div <= 500:
         triangle = get_triangle_of(n)
-        dividers = all_dividers(triangle)
+        dividers = all_divisors(triangle)
         n_div = len(dividers)
         if n_div > max_ndiv:
             max_ndiv = n_div

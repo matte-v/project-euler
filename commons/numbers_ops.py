@@ -2,7 +2,10 @@ import itertools
 import math
 
 
-def all_dividers(n):
+def all_divisors(n):
+    assert n > 0, "n should be > 0"
+    if n == 1:
+        return [1]
     div = []
     repeated_primes = get_repeated_primes(n)
     for k in range(1, len(repeated_primes)):
