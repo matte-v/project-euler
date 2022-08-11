@@ -3,18 +3,21 @@ A palindromic number reads the same both ways. The largest palindrome made from 
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 """
-from commons.numbers import is_palindrome
+import timeit
+
+from commons.numbers_ops import is_palindrome
 
 
 def main():
     largest = 0
     for i in range(100, 1000):
         for j in range(100, 1000):
-            p = i*j
+            p = i * j
             if is_palindrome(p) and p > largest:
                 largest = p
     print(f'The solution is {largest}')
 
 
 if __name__ == '__main__':
-    main()
+    t = timeit.timeit(main, number=1)
+    print(f"Execution time: {t:.5f}s")

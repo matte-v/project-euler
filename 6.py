@@ -9,7 +9,7 @@ Hence the difference between the sum of the squares of the first ten natural num
 
 Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 """
-
+import timeit
 from itertools import combinations
 
 
@@ -22,4 +22,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    t = timeit.timeit(main, number=1)
+    print(f"Execution time: {t:.5f}s")

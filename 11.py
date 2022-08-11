@@ -26,7 +26,9 @@ The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
 
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 """
-from commons.numbers import list_mult
+import timeit
+
+from commons.numbers_ops import multiply_list_elements
 
 grid_s = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -50,15 +52,65 @@ grid_s = """08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"""
 
 
-## INCOMPLETE
+def print_new_gp(method, token, prod):
+    print(f"New greatest product: {method} - prod: {prod}, from {token}")
+
+
+def horizontal_search(hor_grid, token_size, current_greatest_prod, method, debug=True):
+    for line in hor_grid:
+        for i in range(0, len(line) + 1 - token_size):
+            token = line[i:i + token_size]
+            token_prod = multiply_list_elements(token)
+            if token_prod > current_greatest_prod:
+                current_greatest_prod = token_prod
+                if debug:
+                    print_new_gp(method, token, current_greatest_prod)
+    return current_greatest_prod
+
+
+def make_horizontal_from_diag(grid, token_size):
+    grid_d1 = []
+    # upper diagonal
+    for row in range(token_size - 1, len(grid)):
+        new_row = []
+        for idx, col in enumerate(range(0, row + 1)):
+            new_row.append(grid[row - idx][col])
+        grid_d1.append(new_row)
+    # lower diagonal
+    for col in range(1, len(grid) - token_size + 1):
+        new_row = []
+        for idx, row in enumerate(range(len(grid) - 1, col - 1, -1)):
+            new_row.append(grid[row][col + idx])
+        grid_d1.append(new_row)
+    return grid_d1
 
 
 def main():
     grid_of_str = [line for line in [g.split(' ') for g in grid_s.split('\n')]]
-    grid = [[int(x) for x in l] for l in grid_of_str]
+    grid = [[int(x) for x in line] for line in grid_of_str]
 
-    print(f'The solution is {max_sum}')
+    token_size = 4
+    greatest_product = 0
+
+    # horizontal
+    greatest_product = horizontal_search(grid, token_size, greatest_product, method='HORIZONTAL', debug=False)
+
+    # vertical
+    grid_v = [list(x) for x in list(zip(*grid))]
+    greatest_product = horizontal_search(grid_v, token_size, greatest_product, method='VERTICAL', debug=False)
+
+    # diagonal m = 1
+    grid_d1 = make_horizontal_from_diag(grid, token_size)
+    greatest_product = horizontal_search(grid_d1, token_size, greatest_product, method='DIAG 1', debug=False)
+
+    # diagonal m = -1
+    grid_flipped = [line[::-1] for line in grid]
+    grid_d2 = make_horizontal_from_diag(grid_flipped, token_size)
+    greatest_product = horizontal_search(grid_d2, token_size, greatest_product, method='DIAG -1', debug=False)
+
+    print(f'The solution is {greatest_product}')
 
 
 if __name__ == '__main__':
-    main()
+    t = timeit.timeit(main, number=1)
+    print(f"Execution time: {t:.5f}s")

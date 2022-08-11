@@ -3,7 +3,9 @@ The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
 Find the sum of all the primes below two million.
 """
-from commons.numbers import is_prime
+import timeit
+
+from commons.numbers_ops import is_prime
 
 
 def main():
@@ -15,4 +17,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    t = timeit.timeit(main, number=1)
+    print(f"Execution time: {t:.5f}s")

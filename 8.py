@@ -24,7 +24,9 @@ The four adjacent digits in the 1000-digit number that have the greatest product
 
 Find the thirteen adjacent digits in the 1000-digit number that have the greatest product. What is the value of this product?
 """
-from commons.numbers import list_mult
+import timeit
+
+from commons.numbers_ops import multiply_list_elements
 
 nr_s = """
 73167176531330624919225119674426574742355349194934
@@ -56,7 +58,7 @@ def main():
     start_idx = 0
     while start_idx + adj_size < len(nr_s):
         to_multiply = [int(s) for s in nr_s[start_idx: start_idx + adj_size]]
-        this_prod = list_mult(to_multiply)
+        this_prod = multiply_list_elements(to_multiply)
         if this_prod > max_prod:
             max_prod = this_prod
         start_idx += 1
@@ -65,4 +67,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    t = timeit.timeit(main, number=1)
+    print(f"Execution time: {t:.5f}s")
