@@ -16,7 +16,10 @@ def all_divisors(n):
 
 
 def is_prime(n):
-    if n in [0, 1, 2]:
+    assert n >= 0, "n must be >= 0"
+    if n in [0, 1]:
+        return False
+    if n == 2:
         return True
     for x in range(2, math.ceil(math.sqrt(n)) + 1):
         if n % x == 0:
