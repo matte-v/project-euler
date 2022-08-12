@@ -1,3 +1,5 @@
 .idea/*
 */__pycache__/*
 venv/
+/solutions_checker/solutions.json
+/solutions_checker/tmp_solutions_checker.txt
