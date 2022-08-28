@@ -10,12 +10,13 @@ solutions_file = this_file_folder / "solutions.json"
 
 
 def run_all_problems():
-    cleanup()
-    problem_files = [x for x in this_file_folder.parent.resolve().glob("*.py") if re.search(r'\d+', str(x))]
+    problem_files = [x for x in this_file_folder.parent.resolve().glob("*/*.py") if re.search(r'\d+', str(x))]
     problem_files.sort(key=lambda x: int(str(x.stem)))
+    print(f"Running all problems...")
     for f in problem_files:
         os.system(f'echo Problem {f.stem} >> {tmp_file_path} '
                   f'&& python3 {f.absolute()} >> {tmp_file_path} 2>&1')
+    print(f"Done")
 
 
 def parse_outfile():
@@ -71,8 +72,8 @@ if __name__ == '__main__':
     """
     This checks for regression in already-solved problems, e.g. after refactoring common functions
     """
+    cleanup()
     official_solutions_dict = load_solutions_dict()
     run_all_problems()
     problem_solution_dict = parse_outfile()
     run_comparison(official_solutions_dict, problem_solution_dict)
-    cleanup()

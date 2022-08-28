@@ -9,7 +9,8 @@ is the 938th name in the list. So, COLIN would obtain a score of 938 × 53 = 497
 What is the total of all the name scores in the file?
 """
 import timeit
-from pathlib import Path
+
+from commons import read_problem_file
 
 
 def alpha_value(n):
@@ -17,8 +18,7 @@ def alpha_value(n):
 
 
 def main():
-    with Path("files/p022_names.txt").open() as f:
-        names = f.read()
+    names = read_problem_file('p022_names.txt')
     names_list = names.upper().replace('"', '').split(',')
     names_list.sort()
     scores = [(i + 1) * alpha_value(n) for i, n in enumerate(names_list)]
